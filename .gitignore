@@ -5,3 +5,4 @@ data/*.xlsx
 *.log
 .vscode/
 .idea/
+data/*.json

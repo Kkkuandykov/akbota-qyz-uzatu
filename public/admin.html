@@ -3,190 +3,819 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RSVP · Админ</title>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <title>RSVP · Ақбота · Админ</title>
   <style>
     :root {
-      --bg: #FBF5EC;
-      --cream: #FFFCF6;
-      --ink: #3A2418;
-      --gold: #C9A876;
-      --gold-deep: #A8854F;
-      --line: rgba(168, 133, 79, 0.25);
+      --bg: #F5F5F7;
+      --surface: #FFFFFF;
+      --surface-2: #FBFBFD;
+      --surface-3: #F2F2F4;
+      --text: #1D1D1F;
+      --text-2: #6E6E73;
+      --text-3: #A1A1A6;
+      --line: rgba(60, 60, 67, 0.08);
+      --line-2: rgba(60, 60, 67, 0.18);
+      --accent: #6B1F2A;
+      --accent-soft: rgba(107, 31, 42, 0.08);
+      --green: #34C759;
+      --green-soft: rgba(52, 199, 89, 0.14);
+      --green-text: #1B8C3A;
+      --orange: #FF9500;
+      --orange-soft: rgba(255, 149, 0, 0.14);
+      --red: #FF3B30;
+      --red-soft: rgba(255, 59, 48, 0.1);
+      --red-text: #C0392B;
+      --blue: #0071E3;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+      --shadow: 0 4px 12px rgba(0,0,0,0.05);
+      --shadow-lg: 0 20px 40px -16px rgba(0,0,0,0.12);
+      --radius: 14px;
+      --radius-lg: 20px;
     }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: #1C1C1E;
+        --surface-2: #2C2C2E;
+        --surface-3: #3A3A3C;
+        --text: #F5F5F7;
+        --text-2: #98989D;
+        --text-3: #636366;
+        --line: rgba(255, 255, 255, 0.08);
+        --line-2: rgba(255, 255, 255, 0.14);
+        --accent: #FF6482;
+        --accent-soft: rgba(255, 100, 130, 0.16);
+        --green-text: #4ADC75;
+        --red-text: #FF6961;
+        --shadow: 0 4px 12px rgba(0,0,0,0.4);
+        --shadow-lg: 0 20px 40px -16px rgba(0,0,0,0.6);
+      }
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
     body {
       margin: 0;
-      padding: 40px 24px;
+      padding: 0;
       background: var(--bg);
-      color: var(--ink);
-      font-family: 'Manrope', system-ui, sans-serif;
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'SF Pro Display', system-ui, sans-serif;
+      font-size: 15px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      letter-spacing: -0.01em;
     }
-    .wrap { max-width: 1000px; margin: 0 auto; }
-    h1 {
-      font-weight: 500;
+
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+
+    .head { margin-bottom: 28px; }
+    .head-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
       margin: 0 0 8px;
-      font-size: 1.6rem;
     }
-    .sub {
-      color: #8A7461;
-      margin: 0 0 28px;
-      font-size: 0.9rem;
+    .head-title {
+      font-size: clamp(2rem, 4.5vw, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.028em;
+      margin: 0 0 4px;
     }
-    .stats {
+    .head-sub { color: var(--text-2); margin: 0; font-size: 1rem; }
+
+    /* ============ Capacity card ============ */
+    .capacity {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 22px 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 20px;
       display: flex;
-      gap: 16px;
-      margin-bottom: 28px;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .cap-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .cap-label {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      margin: 0;
+      font-weight: 500;
+    }
+    .cap-edit {
+      font-size: 0.85rem;
+      color: var(--accent);
+      background: transparent;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 500;
+    }
+    .cap-edit:hover { text-decoration: underline; }
+    .cap-numbers {
+      display: flex;
+      align-items: baseline;
+      gap: 4px;
+      font-weight: 700;
+      letter-spacing: -0.028em;
+    }
+    .cap-current { font-size: 2.6rem; line-height: 1; color: var(--text); }
+    .cap-divider { font-size: 1.6rem; color: var(--text-3); }
+    .cap-max { font-size: 1.6rem; color: var(--text-2); }
+    .cap-unit { font-size: 0.9rem; color: var(--text-2); margin-left: 4px; font-weight: 500; letter-spacing: 0; }
+    .cap-bar {
+      width: 100%;
+      height: 8px;
+      background: var(--surface-3);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .cap-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--green) 0%, var(--orange) 80%, var(--red) 100%);
+      border-radius: 999px;
+      transition: width 0.4s cubic-bezier(.2,.7,.2,1);
+    }
+    .cap-bar-fill.no-limit { background: var(--green); }
+    .cap-meta {
+      font-size: 0.82rem;
+      color: var(--text-2);
+      display: flex;
+      gap: 8px;
       flex-wrap: wrap;
     }
-    .stat {
-      flex: 1;
-      min-width: 180px;
-      padding: 20px 24px;
-      background: var(--cream);
-      border: 1px solid var(--line);
-      border-radius: 14px;
-    }
-    .stat-label {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: #8A7461;
-      margin: 0 0 8px;
-    }
-    .stat-value {
-      font-size: 2rem;
-      font-weight: 600;
-      margin: 0;
-    }
-    .stat-value.green { color: #4F7A4A; }
-    .stat-value.red { color: #A65555; }
+    .cap-meta-dot { color: var(--text-3); }
+    .cap-meta strong { color: var(--text); font-weight: 600; font-variant-numeric: tabular-nums; }
 
-    .toolbar {
-      margin-bottom: 18px;
+    /* ============ Stats ============ */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      margin-bottom: 20px;
     }
+    .stat {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .stat-label { font-size: 0.78rem; color: var(--text-2); font-weight: 500; margin: 0 0 4px; }
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      letter-spacing: -0.022em;
+      margin: 0;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-sub { font-size: 0.72rem; color: var(--text-3); margin-top: 2px; }
+    .stat--green .stat-value { color: var(--green); }
+    .stat--red .stat-value { color: var(--red); }
+    .stat--gray .stat-value { color: var(--text-2); }
+
+    /* ============ Toolbar ============ */
+    .toolbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .tabs {
+      display: inline-flex;
+      background: var(--surface-2);
+      padding: 3px;
+      border-radius: 10px;
+      gap: 2px;
+    }
+    .tab {
+      padding: 7px 14px;
+      border-radius: 8px;
+      border: none;
+      background: transparent;
+      color: var(--text-2);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: -0.01em;
+    }
+    .tab:hover { color: var(--text); }
+    .tab.active {
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+    .tab .count {
+      display: inline-block;
+      margin-left: 6px;
+      font-size: 0.78rem;
+      color: var(--text-3);
+      font-variant-numeric: tabular-nums;
+    }
+    .tab.active .count { color: var(--text-2); }
+    .toolbar-spacer { flex: 1; }
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 10px 18px;
-      background: var(--ink);
-      color: var(--cream);
-      border-radius: 999px;
+      gap: 6px;
+      padding: 8px 16px;
+      border-radius: 10px;
+      border: none;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      letter-spacing: -0.01em;
       text-decoration: none;
-      font-size: 0.85rem;
-      font-weight: 500;
-      transition: background 0.2s ease;
     }
-    .btn:hover { background: var(--gold-deep); }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-primary:hover { transform: translateY(-1px); filter: brightness(1.08); }
+    .btn-secondary { background: var(--surface-2); color: var(--text); }
+    .btn-secondary:hover { background: var(--surface-3); }
+    .btn svg { width: 14px; height: 14px; }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: var(--cream);
-      border-radius: 14px;
+    /* ============ List ============ */
+    .list {
+      background: var(--surface);
+      border-radius: var(--radius);
       overflow: hidden;
-      border: 1px solid var(--line);
+      box-shadow: var(--shadow-sm);
     }
-    th, td {
-      text-align: left;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--line);
-      font-size: 0.92rem;
-    }
-    th {
-      background: rgba(224, 201, 154, 0.2);
-      font-weight: 600;
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: #5C4233;
-    }
-    tr:last-child td { border-bottom: none; }
-    .tag {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 500;
-    }
-    .tag.yes { background: #D4E8C8; color: #4F7A4A; }
-    .tag.no { background: #F5D5D5; color: #A65555; }
-
-    .empty {
-      text-align: center;
+    .list-empty {
       padding: 60px 24px;
-      color: #8A7461;
+      text-align: center;
+      color: var(--text-2);
+      font-size: 0.95rem;
+    }
+    .list-empty .icon { font-size: 2.5rem; opacity: 0.4; margin-bottom: 12px; display: block; }
+
+    .row {
+      display: grid;
+      grid-template-columns: 32px 1fr auto auto auto;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--line);
+      transition: background 0.15s ease;
+    }
+    .row:last-child { border-bottom: none; }
+    .row:hover { background: var(--surface-2); }
+    .row.archived .row-name,
+    .row.archived .row-time,
+    .row.archived .row-resp { opacity: 0.55; }
+
+    .row-num {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--accent-soft);
+      color: var(--accent);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.74rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .row-info { min-width: 0; }
+    .row-name {
+      font-weight: 600;
+      font-size: 0.98rem;
+      letter-spacing: -0.012em;
+      margin: 0 0 2px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .row-time {
+      font-size: 0.78rem;
+      color: var(--text-2);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .row-resp {
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+      white-space: nowrap;
+    }
+    .row-resp.yes, .row-resp.couple { background: var(--green-soft); color: var(--green-text); }
+    .row-resp.no { background: var(--red-soft); color: var(--red-text); }
+
+    .row-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--surface-2);
+      border-radius: 999px;
+      padding: 4px;
+    }
+    .row-count button {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: none;
+      background: var(--surface);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      line-height: 1;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    }
+    .row-count button:hover { background: var(--accent); color: #fff; }
+    .row-count button:disabled { opacity: 0.35; cursor: not-allowed; background: var(--surface); color: var(--text); }
+    .row-count .row-count-val {
+      min-width: 18px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+    .row.archived .row-count { opacity: 0.55; pointer-events: none; }
+
+    .row-action {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: transparent;
+      border: none;
+      color: var(--text-3);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .row-action:hover { background: var(--surface-2); color: var(--text); }
+    .row-action.danger:hover { background: var(--red-soft); color: var(--red); }
+    .row-action.restore:hover { background: var(--green-soft); color: var(--green); }
+    .row-action svg { width: 16px; height: 16px; }
+
+    @media (max-width: 600px) {
+      .wrap { padding: 22px 14px 60px; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .row {
+        grid-template-columns: 28px 1fr auto;
+        grid-template-rows: auto auto;
+        padding: 12px 14px;
+        gap: 6px 10px;
+      }
+      .row-num { grid-row: 1 / 2; grid-column: 1 / 2; }
+      .row-info { grid-row: 1 / 2; grid-column: 2 / 3; min-width: 0; }
+      .row-resp { grid-row: 1 / 2; grid-column: 3 / 4; font-size: 0.68rem; padding: 3px 8px; }
+      .row-count { grid-row: 2 / 3; grid-column: 2 / 3; justify-self: start; }
+      .row-action { grid-row: 2 / 3; grid-column: 3 / 4; justify-self: end; background: var(--surface-2); }
+      .row-name { font-size: 0.95rem; }
+      .row-time { font-size: 0.74rem; }
+    }
+
+    /* ============ Modal ============ */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .modal.open { display: flex; }
+    .modal-card {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      max-width: 380px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+      animation: modalIn 0.25s cubic-bezier(.2,.7,.2,1);
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.96) translateY(8px); }
+      to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-title { font-size: 1.15rem; font-weight: 600; margin: 0 0 6px; letter-spacing: -0.015em; }
+    .modal-text { color: var(--text-2); margin: 0 0 18px; font-size: 0.92rem; }
+    .modal-actions { display: flex; gap: 8px; margin-top: 6px; }
+    .modal-actions .btn { flex: 1; justify-content: center; padding: 11px 16px; }
+
+    .field { margin-bottom: 14px; }
+    .field-label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-2);
+      margin-bottom: 6px;
+      font-weight: 500;
+      letter-spacing: -0.005em;
+    }
+    .field-input, .field-select {
+      width: 100%;
+      padding: 11px 14px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text);
+      outline: none;
+      transition: all 0.2s ease;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .field-input:focus, .field-select:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+    .field-select {
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%236E6E73' stroke-width='2'><path d='M4 6 L8 10 L12 6'/></svg>");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>RSVP · Қыз Ұзату · Ақбота</h1>
-    <p class="sub">18 шілде 2026 · «Baltash» мейрамханасы</p>
+    <header class="head">
+      <p class="head-eyebrow">Ақбота · Қыз ұзату</p>
+      <h1 class="head-title">Қонақтар</h1>
+      <p class="head-sub">18 шілде 2026 · «Baltash» мейрамханасы</p>
+    </header>
 
-    <div class="stats">
-      <div class="stat">
-        <p class="stat-label">Барлығы</p>
-        <p class="stat-value" id="totalCount">0</p>
+    <!-- Capacity -->
+    <section class="capacity" id="capacity">
+      <div class="cap-head">
+        <p class="cap-label">Күтілетін қонақтар</p>
+        <button class="cap-edit" id="capEditBtn">Орын санын өзгерту</button>
       </div>
-      <div class="stat">
-        <p class="stat-label">Келемін</p>
-        <p class="stat-value green" id="yesCount">0</p>
+      <div class="cap-numbers">
+        <span class="cap-current" id="capCurrent">0</span>
+        <span class="cap-divider" id="capDivider">/</span>
+        <span class="cap-max" id="capMax">∞</span>
+        <span class="cap-unit">адам</span>
       </div>
-      <div class="stat">
-        <p class="stat-label">Келе алмаймын</p>
-        <p class="stat-value red" id="noCount">0</p>
+      <div class="cap-bar" id="capBarWrap"><div class="cap-bar-fill no-limit" id="capBar" style="width:0%"></div></div>
+      <div class="cap-meta">
+        <span>Растады: <strong id="metaConfirmed">0</strong></span>
+        <span class="cap-meta-dot">·</span>
+        <span>Қалды: <strong id="metaLeft">—</strong></span>
       </div>
-    </div>
+    </section>
 
+    <!-- Stats -->
+    <section class="stats">
+      <div class="stat stat--green"><p class="stat-label">Келемін</p><p class="stat-value" id="yesCount">0</p><p class="stat-sub" id="yesPeople">0 адам</p></div>
+      <div class="stat stat--green"><p class="stat-label">Жұбыммен</p><p class="stat-value" id="coupleCount">0</p><p class="stat-sub" id="couplePeople">0 адам</p></div>
+      <div class="stat stat--red"><p class="stat-label">Келе алмайды</p><p class="stat-value" id="noCount">0</p></div>
+      <div class="stat stat--gray"><p class="stat-label">Архивте</p><p class="stat-value" id="archivedCount">0</p></div>
+    </section>
+
+    <!-- Toolbar -->
     <div class="toolbar">
-      <a class="btn" id="downloadBtn" href="#">⬇ Excel жүктеу</a>
+      <div class="tabs">
+        <button class="tab active" data-tab="active">Белсенді <span class="count" id="activeTabCount">0</span></button>
+        <button class="tab" data-tab="archived">Архив <span class="count" id="archivedTabCount">0</span></button>
+      </div>
+      <div class="toolbar-spacer"></div>
+      <button class="btn btn-primary" id="addBtn">
+        <svg viewBox="0 0 16 16" fill="none"><path d="M8 3 L8 13 M3 8 L13 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        Қонақ
+      </button>
+      <a class="btn btn-secondary" id="downloadBtn" href="#" download>Excel</a>
     </div>
 
-    <div id="tableWrap"></div>
+    <section class="list" id="list"></section>
+  </div>
+
+  <!-- Confirm modal -->
+  <div class="modal" id="confirmModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <p class="modal-title" id="confirmTitle"></p>
+      <p class="modal-text" id="confirmText"></p>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" id="confirmCancel">Бас тарту</button>
+        <button class="btn btn-primary" id="confirmOk">Растау</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Capacity modal -->
+  <div class="modal" id="capacityModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <p class="modal-title">Максималды орын саны</p>
+      <p class="modal-text">Мейрамхана сыйымдылығын белгілеңіз. 0 — шектеусіз.</p>
+      <div class="field">
+        <label class="field-label" for="capacityInput">Адам саны</label>
+        <input type="number" id="capacityInput" class="field-input" min="0" max="10000" placeholder="мысалы: 200" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" data-cap-close>Бас тарту</button>
+        <button class="btn btn-primary" id="capacitySave">Сақтау</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add guest modal -->
+  <div class="modal" id="addModal" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <p class="modal-title">Қонақ қосу</p>
+      <p class="modal-text">Толтырмаған қонақты қолмен қосыңыз.</p>
+      <div class="field">
+        <label class="field-label" for="addName">Аты-жөні</label>
+        <input type="text" id="addName" class="field-input" placeholder="Айгерім Сейтжанқызы" maxlength="200" />
+      </div>
+      <div class="field">
+        <label class="field-label" for="addResponse">Жауап</label>
+        <select id="addResponse" class="field-select">
+          <option value="келемін">Келемін</option>
+          <option value="жұбыммен келемін">Жұбыммен келемін</option>
+          <option value="келе алмаймын">Келе алмаймын</option>
+        </select>
+      </div>
+      <div class="field">
+        <label class="field-label" for="addCount">Адам саны</label>
+        <input type="number" id="addCount" class="field-input" min="1" max="50" value="1" />
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" data-add-close>Бас тарту</button>
+        <button class="btn btn-primary" id="addSave">Қосу</button>
+      </div>
+    </div>
   </div>
 
   <script>
     const key = new URLSearchParams(location.search).get('key');
     document.getElementById('downloadBtn').href = '/api/rsvp/download?key=' + encodeURIComponent(key);
 
+    let allRows = [];
+    let settings = { capacity: 0 };
+    let currentTab = 'active';
+
+    const $ = (id) => document.getElementById(id);
+    const els = {
+      capCurrent: $('capCurrent'), capMax: $('capMax'), capDivider: $('capDivider'),
+      capBar: $('capBar'), capBarWrap: $('capBarWrap'),
+      metaConfirmed: $('metaConfirmed'), metaLeft: $('metaLeft'),
+      yesCount: $('yesCount'), coupleCount: $('coupleCount'), noCount: $('noCount'), archivedCount: $('archivedCount'),
+      yesPeople: $('yesPeople'), couplePeople: $('couplePeople'),
+      activeTabCount: $('activeTabCount'), archivedTabCount: $('archivedTabCount'),
+      list: $('list'),
+      confirmModal: $('confirmModal'), confirmTitle: $('confirmTitle'), confirmText: $('confirmText'),
+      confirmOk: $('confirmOk'), confirmCancel: $('confirmCancel'),
+      capacityModal: $('capacityModal'), capacityInput: $('capacityInput'), capacitySave: $('capacitySave'),
+      addModal: $('addModal'), addName: $('addName'), addResponse: $('addResponse'), addCount: $('addCount'), addSave: $('addSave'),
+    };
+
+    function respClass(r) {
+      if (r === 'келемін') return 'yes';
+      if (r === 'жұбыммен келемін') return 'couple';
+      return 'no';
+    }
+    function respLabel(r) {
+      if (r === 'келемін') return 'Келемін';
+      if (r === 'жұбыммен келемін') return 'Жұбыммен';
+      return 'Келе алмайды';
+    }
+    function escapeHtml(s) {
+      return String(s ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+    }
+
+    function isAttending(r) {
+      return r.response === 'келемін' || r.response === 'жұбыммен келемін';
+    }
+
+    function renderStats() {
+      const active = allRows.filter(r => r.status !== 'archived');
+      const archived = allRows.filter(r => r.status === 'archived');
+      const yes = active.filter(r => r.response === 'келемін');
+      const couple = active.filter(r => r.response === 'жұбыммен келемін');
+      const no = active.filter(r => r.response === 'келе алмаймын');
+
+      els.yesCount.textContent = yes.length;
+      els.coupleCount.textContent = couple.length;
+      els.noCount.textContent = no.length;
+      els.archivedCount.textContent = archived.length;
+      els.yesPeople.textContent = yes.reduce((s,r)=>s+(r.count||1), 0) + ' адам';
+      els.couplePeople.textContent = couple.reduce((s,r)=>s+(r.count||2), 0) + ' адам';
+      els.activeTabCount.textContent = active.length;
+      els.archivedTabCount.textContent = archived.length;
+
+      const confirmed = active.filter(isAttending).reduce((s,r)=>s+(r.count||1), 0);
+      const cap = settings.capacity || 0;
+      els.capCurrent.textContent = confirmed;
+      els.metaConfirmed.textContent = confirmed;
+
+      if (cap > 0) {
+        els.capMax.textContent = cap;
+        els.capDivider.style.display = '';
+        els.capMax.style.display = '';
+        els.metaLeft.textContent = Math.max(0, cap - confirmed);
+        const pct = Math.min(100, Math.round((confirmed / cap) * 100));
+        els.capBar.style.width = pct + '%';
+        els.capBar.classList.remove('no-limit');
+      } else {
+        els.capMax.textContent = '∞';
+        els.metaLeft.textContent = '—';
+        els.capBar.style.width = '100%';
+        els.capBar.classList.add('no-limit');
+      }
+    }
+
+    function renderList() {
+      const rows = allRows.filter(r => currentTab === 'archived' ? r.status === 'archived' : r.status !== 'archived');
+      if (!rows.length) {
+        els.list.innerHTML = `
+          <div class="list-empty">
+            <span class="icon">${currentTab === 'archived' ? '📦' : '✉️'}</span>
+            ${currentTab === 'archived' ? 'Архив бос' : 'Әзірге жауаптар жоқ'}
+          </div>`;
+        return;
+      }
+      const sorted = [...rows].reverse();
+      const isArchived = currentTab === 'archived';
+      els.list.innerHTML = sorted.map(r => {
+        const showCount = r.response !== 'келе алмаймын';
+        return `
+        <div class="row ${isArchived ? 'archived' : ''}" data-id="${r.id}">
+          <span class="row-num">${r.id}</span>
+          <div class="row-info">
+            <p class="row-name">${escapeHtml(r.name)}</p>
+            <p class="row-time">${escapeHtml(r.timestamp)}</p>
+          </div>
+          <span class="row-resp ${respClass(r.response)}">${respLabel(r.response)}</span>
+          ${showCount ? `
+            <div class="row-count" data-count-for="${r.id}">
+              <button data-act="dec" data-id="${r.id}" ${r.count <= 0 ? 'disabled' : ''}>−</button>
+              <span class="row-count-val">${r.count}</span>
+              <button data-act="inc" data-id="${r.id}">+</button>
+            </div>` : `<div></div>`}
+          ${isArchived
+            ? `<button class="row-action restore" data-act="restore" data-id="${r.id}" title="Қайтару" aria-label="Қайтару">
+                 <svg viewBox="0 0 24 24" fill="none"><path d="M3 12 a9 9 0 1 0 3-6.7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 4 L3 9 L8 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+               </button>`
+            : `<button class="row-action danger" data-act="archive" data-id="${r.id}" title="Архивке" aria-label="Архивке">
+                 <svg viewBox="0 0 24 24" fill="none"><path d="M4 7 L20 7 M4 7 L5 19 a2 2 0 0 0 2 2 L17 21 a2 2 0 0 0 2 -2 L20 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 11 L9 17 M15 11 L15 17 M9 4 L15 4 L15 7 L9 7 Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+               </button>`}
+        </div>
+      `}).join('');
+    }
+
     async function load() {
       const res = await fetch('/api/rsvp/list?key=' + encodeURIComponent(key));
       if (!res.ok) {
-        document.getElementById('tableWrap').innerHTML = '<div class="empty">Қатынау жоқ</div>';
+        els.list.innerHTML = '<div class="list-empty">Қатынау жоқ</div>';
         return;
       }
-      const { rows } = await res.json();
-      const yes = rows.filter(r => r.response === 'келемін').length;
-      const no = rows.filter(r => r.response === 'келе алмаймын').length;
-      document.getElementById('totalCount').textContent = rows.length;
-      document.getElementById('yesCount').textContent = yes;
-      document.getElementById('noCount').textContent = no;
-
-      if (!rows.length) {
-        document.getElementById('tableWrap').innerHTML = '<div class="empty">Әзірге жауаптар жоқ</div>';
-        return;
-      }
-
-      const html = `
-        <table>
-          <thead>
-            <tr><th>№</th><th>Күні</th><th>Аты-жөні</th><th>Жауап</th></tr>
-          </thead>
-          <tbody>
-            ${rows.reverse().map(r => `
-              <tr>
-                <td>${r.id}</td>
-                <td>${r.timestamp}</td>
-                <td>${r.name}</td>
-                <td><span class="tag ${r.response === 'келемін' ? 'yes' : 'no'}">${r.response}</span></td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      `;
-      document.getElementById('tableWrap').innerHTML = html;
+      const data = await res.json();
+      allRows = data.rows || [];
+      settings = data.settings || { capacity: 0 };
+      renderStats();
+      renderList();
     }
+
+    function openConfirm({ title, text, okLabel = 'Растау' }) {
+      return new Promise((resolve) => {
+        els.confirmTitle.textContent = title;
+        els.confirmText.textContent = text;
+        els.confirmOk.textContent = okLabel;
+        els.confirmModal.classList.add('open');
+        const cleanup = (val) => {
+          els.confirmModal.classList.remove('open');
+          els.confirmOk.removeEventListener('click', onOk);
+          els.confirmCancel.removeEventListener('click', onCancel);
+          resolve(val);
+        };
+        const onOk = () => cleanup(true);
+        const onCancel = () => cleanup(false);
+        els.confirmOk.addEventListener('click', onOk);
+        els.confirmCancel.addEventListener('click', onCancel);
+      });
+    }
+
+    function closeModal(el) {
+      el.classList.remove('open');
+    }
+
+    // Tabs
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentTab = tab.dataset.tab;
+        renderList();
+      });
+    });
+
+    // List actions: archive/restore/count
+    els.list.addEventListener('click', async (e) => {
+      const btn = e.target.closest('[data-act]');
+      if (!btn) return;
+      const id = Number(btn.dataset.id);
+      const act = btn.dataset.act;
+      if (act === 'inc' || act === 'dec') {
+        const row = allRows.find(r => r.id === id);
+        if (!row) return;
+        const newCount = act === 'inc' ? row.count + 1 : Math.max(0, row.count - 1);
+        await fetch('/api/rsvp/update?key=' + encodeURIComponent(key), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id, count: newCount }),
+        });
+        await load();
+        return;
+      }
+      if (act === 'archive' || act === 'restore') {
+        const ok = await openConfirm({
+          title: act === 'archive' ? 'Архивке жіберу?' : 'Қайтару?',
+          text: act === 'archive'
+            ? 'Қонақ архивке жіберіледі — деректер жоғалмайды.'
+            : 'Қонақ белсенді тізімге қайтарылады.',
+          okLabel: act === 'archive' ? 'Архивке' : 'Қайтару',
+        });
+        if (!ok) return;
+        await fetch('/api/rsvp/' + act + '?key=' + encodeURIComponent(key), {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id }),
+        });
+        await load();
+      }
+    });
+
+    // Capacity modal
+    $('capEditBtn').addEventListener('click', () => {
+      els.capacityInput.value = settings.capacity || '';
+      els.capacityModal.classList.add('open');
+      setTimeout(() => els.capacityInput.focus(), 50);
+    });
+    document.querySelectorAll('[data-cap-close]').forEach(b => b.addEventListener('click', () => closeModal(els.capacityModal)));
+    els.capacitySave.addEventListener('click', async () => {
+      const v = Number(els.capacityInput.value) || 0;
+      await fetch('/api/settings?key=' + encodeURIComponent(key), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ capacity: v }),
+      });
+      closeModal(els.capacityModal);
+      await load();
+    });
+
+    // Add guest modal
+    $('addBtn').addEventListener('click', () => {
+      els.addName.value = '';
+      els.addResponse.value = 'келемін';
+      els.addCount.value = 1;
+      els.addModal.classList.add('open');
+      setTimeout(() => els.addName.focus(), 50);
+    });
+    document.querySelectorAll('[data-add-close]').forEach(b => b.addEventListener('click', () => closeModal(els.addModal)));
+    els.addResponse.addEventListener('change', () => {
+      if (els.addResponse.value === 'жұбыммен келемін') els.addCount.value = 2;
+      else if (els.addResponse.value === 'келе алмаймын') els.addCount.value = 0;
+      else els.addCount.value = 1;
+    });
+    els.addSave.addEventListener('click', async () => {
+      const name = els.addName.value.trim();
+      const response = els.addResponse.value;
+      const count = Number(els.addCount.value) || 1;
+      if (!name) { els.addName.focus(); return; }
+      const res = await fetch('/api/rsvp/add?key=' + encodeURIComponent(key), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, response, count }),
+      });
+      if (res.ok) {
+        closeModal(els.addModal);
+        await load();
+      }
+    });
+
+    // Click overlay to close
+    [els.confirmModal, els.capacityModal, els.addModal].forEach(m => {
+      m.addEventListener('click', (e) => { if (e.target === m) closeModal(m); });
+    });
+
     load();
   </script>
 </body>

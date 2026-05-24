@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#1A1410" />
+  <title>Қыз Ұзату · Ақбота · 18.07.2026</title>
+
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Қыз Ұзату · Ақбота" />
+  <meta property="og:description" content="18 шілде 2026 · Тараз · Baltash · Сізді қыз ұзату тойымызға шақырамыз" />
+  <meta property="og:image" content="/images/bride-1.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Marcellus&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Marck+Script&family=Caveat:wght@400;500;600;700&family=Italianno&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/styles.css" />
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E🤍%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <!-- SVG-симво лы (тюльпан + орнамент-лента) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <!-- Қызғалдақ — казахский тюльпан (символ) -->
+      <symbol id="sym-tulip" viewBox="0 0 80 120">
+        <g fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M40 8 C30 22 26 38 30 52 C32 60 36 64 40 64 C44 64 48 60 50 52 C54 38 50 22 40 8 Z" fill="currentColor" fill-opacity="0.85"/>
+          <path d="M40 8 C36 24 36 40 40 52" stroke-opacity="0.45" stroke="#FBF2DC"/>
+          <path d="M40 64 L40 110" />
+          <path d="M40 78 C30 78 22 84 18 92" />
+          <path d="M40 86 C52 86 60 92 64 100" />
+          <path d="M18 92 C16 96 16 102 20 106" fill="currentColor" fill-opacity="0.3" stroke-width="0"/>
+          <path d="M64 100 C66 104 66 108 62 112" fill="currentColor" fill-opacity="0.3" stroke-width="0"/>
+        </g>
+      </symbol>
+
+      <!-- Лента-орнамент: волна с алмазами -->
+      <symbol id="sym-ribbon" viewBox="0 0 320 20">
+        <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+          <path d="M0 10 Q40 2 80 10 T160 10 T240 10 T320 10" />
+          <path d="M160 4 L166 10 L160 16 L154 10 Z" fill="currentColor"/>
+          <circle cx="80" cy="10" r="1.8" fill="currentColor"/>
+          <circle cx="240" cy="10" r="1.8" fill="currentColor"/>
+          <circle cx="20" cy="10" r="1" fill="currentColor" opacity=".6"/>
+          <circle cx="300" cy="10" r="1" fill="currentColor" opacity=".6"/>
+        </g>
+      </symbol>
+
+      <!-- Угловой орнамент (қошқар мүйіз стилизованный) -->
+      <symbol id="sym-corner" viewBox="0 0 60 60">
+        <g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">
+          <path d="M4 4 L4 24 C4 14 12 6 22 6 L40 6" />
+          <path d="M40 6 C48 6 52 12 52 20 C52 28 46 32 38 28" />
+          <circle cx="4" cy="4" r="2" fill="currentColor"/>
+        </g>
+      </symbol>
+
+      <!-- Ласточка / птичка-силуэт (стилизованная) -->
+      <symbol id="sym-bird" viewBox="0 0 40 20">
+        <path fill="currentColor" d="M2 16 C8 8 14 6 20 12 C22 8 24 6 28 6 C26 8 24 11 24 13 C20 13 16 13 12 15 C8 17 5 17 2 16 Z" />
+        <path fill="currentColor" opacity="0.7" d="M14 11 C16 9 18 9 20 11 L18 13 Z" />
+      </symbol>
+
+      <!-- ОЮ узор — превращаем через mask -->
+      <symbol id="sym-oyu" viewBox="0 0 736 100" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <filter id="oyu-invert">
+            <feColorMatrix type="matrix" values="-1 0 0 0 1  0 -1 0 0 1  0 0 -1 0 1  0 0 0 1 0"/>
+          </filter>
+          <mask id="oyu-mask">
+            <rect width="736" height="100" fill="black"/>
+            <image href="/images/oyu.jpeg" x="0" y="-320" width="736" height="736" filter="url(#oyu-invert)" preserveAspectRatio="xMidYMid slice"/>
+          </mask>
+        </defs>
+        <rect width="736" height="100" fill="currentColor" mask="url(#oyu-mask)"/>
+      </symbol>
+    </defs>
+  </svg>
+
+  <!-- Music toggle -->
+  <button id="musicToggle" class="music-toggle" aria-label="Музыканы қосу/тоқтату">
+    <span class="music-icon" aria-hidden="true">
+      <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+    </span>
+    <span class="music-label">Сенімен</span>
+  </button>
+  <audio id="bgMusic" loop preload="auto">
+    <source src="/music/senimenen.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="hero">
+    <div class="hero-bg" style="background-image: url('/images/bride-1.jpg');"></div>
+    <div class="hero-vignette"></div>
+    <div class="hero-grain"></div>
+
+    <div class="hero-content">
+      <p class="hero-eyebrow">Қыз Ұзату</p>
+      <h1 class="hero-name">
+        <span class="hero-name-letter">А</span><span class="hero-name-letter">қ</span><span class="hero-name-letter">б</span><span class="hero-name-letter">о</span><span class="hero-name-letter">т</span><span class="hero-name-letter">а</span>
+      </h1>
+      <div class="hero-flourish" aria-hidden="true">
+        <svg viewBox="0 0 736 100" preserveAspectRatio="xMidYMid meet"><use href="#sym-oyu"/></svg>
+      </div>
+      <p class="hero-date">
+        <span>18</span><span class="hero-date-sep">·</span><span>Шілде</span><span class="hero-date-sep">·</span><span>2026</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ GREETING ============ -->
+  <section class="section greeting" id="greeting">
+    <div class="container container--narrow">
+      <p class="section-eyebrow reveal">Қадірменді достар</p>
+      <h2 class="section-title reveal">Құрметті қонақтар!</h2>
+      <p class="greeting-text reveal" data-delay="120">
+        Бұл біздің жанұямыз үшін ерекше әрі қуанышқа толы сәт.
+      </p>
+      <p class="greeting-text reveal" data-delay="200">
+        Біздің аяулы қызымыз — <span class="hl">Ақботаның</span> ұзату тойына арналған
+        салтанатты ақ дастарханымыздың қадірлі қонағы болуға
+        сіздерді шын жүректен шақырамыз.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ STORY — фото невесты на полный экран ============ -->
+  <section class="story story--full" id="story1" aria-hidden="true">
+    <div class="story-photo" style="background-image: url('/images/bride-3.jpg');">
+      <div class="story-photo-frame"></div>
+    </div>
+  </section>
+
+  <!-- ============ HOSTS (Той иелері) ============ -->
+  <section class="section hosts-section" id="hosts">
+    <div class="container container--narrow">
+      <p class="section-eyebrow reveal">Той иелері</p>
+      <p class="hosts-names reveal" data-delay="100">
+        <span class="host-name">Қайрат</span>
+        <span class="hosts-amp" aria-hidden="true">&amp;</span>
+        <span class="host-name">Роза</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ DATE / CALENDAR ============ -->
+  <section class="section date-section" id="date">
+    <div class="container">
+      <p class="section-eyebrow reveal">Қашан</p>
+      <h2 class="section-title reveal">Той күні</h2>
+
+      <div class="calendar reveal" data-delay="150">
+        <div class="calendar-head">
+          <span class="calendar-month">Шілде</span>
+          <span class="calendar-year">2026</span>
+        </div>
+        <div class="calendar-grid">
+          <span class="calendar-dow">Дс</span>
+          <span class="calendar-dow">Сс</span>
+          <span class="calendar-dow">Ср</span>
+          <span class="calendar-dow">Бс</span>
+          <span class="calendar-dow">Жм</span>
+          <span class="calendar-dow">Сн</span>
+          <span class="calendar-dow">Жс</span>
+
+          <span class="cal-day cal-blank"></span>
+          <span class="cal-day cal-blank"></span>
+          <span class="cal-day">1</span>
+          <span class="cal-day">2</span>
+          <span class="cal-day">3</span>
+          <span class="cal-day">4</span>
+          <span class="cal-day">5</span>
+
+          <span class="cal-day">6</span>
+          <span class="cal-day">7</span>
+          <span class="cal-day">8</span>
+          <span class="cal-day">9</span>
+          <span class="cal-day">10</span>
+          <span class="cal-day">11</span>
+          <span class="cal-day">12</span>
+
+          <span class="cal-day">13</span>
+          <span class="cal-day">14</span>
+          <span class="cal-day">15</span>
+          <span class="cal-day">16</span>
+          <span class="cal-day">17</span>
+          <span class="cal-day cal-heart">
+            <svg class="heart-svg" viewBox="0 0 64 60" aria-hidden="true">
+              <path d="M32 56 C-8 30 6 -2 32 14 C58 -2 72 30 32 56 Z" stroke-linejoin="round" />
+            </svg>
+            <span class="cal-num">18</span>
+          </span>
+          <span class="cal-day">19</span>
+
+          <span class="cal-day">20</span>
+          <span class="cal-day">21</span>
+          <span class="cal-day">22</span>
+          <span class="cal-day">23</span>
+          <span class="cal-day">24</span>
+          <span class="cal-day">25</span>
+          <span class="cal-day">26</span>
+
+          <span class="cal-day">27</span>
+          <span class="cal-day">28</span>
+          <span class="cal-day">29</span>
+          <span class="cal-day">30</span>
+          <span class="cal-day">31</span>
+          <span class="cal-day cal-blank"></span>
+          <span class="cal-day cal-blank"></span>
+        </div>
+
+        <div class="calendar-foot">
+          <div class="cal-foot-cell">
+            <span class="cal-foot-label">Күн</span>
+            <span class="cal-foot-value">Сенбі</span>
+          </div>
+          <div class="cal-foot-divider" aria-hidden="true"></div>
+          <div class="cal-foot-cell">
+            <span class="cal-foot-label">Уақыт</span>
+            <span class="cal-foot-value">18:00</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COUNTDOWN ============ -->
+  <section class="section countdown-section" id="countdown">
+    <div class="container container--narrow">
+      <p class="section-eyebrow reveal">Тойға дейін</p>
+      <div class="countdown reveal" id="countdownTimer">
+        <div class="countdown-cell">
+          <span class="countdown-num" data-cd="days">00</span>
+          <span class="countdown-label">күн</span>
+        </div>
+        <div class="countdown-cell">
+          <span class="countdown-num" data-cd="hours">00</span>
+          <span class="countdown-label">сағат</span>
+        </div>
+        <div class="countdown-cell">
+          <span class="countdown-num" data-cd="minutes">00</span>
+          <span class="countdown-label">минут</span>
+        </div>
+        <div class="countdown-cell">
+          <span class="countdown-num" data-cd="seconds">00</span>
+          <span class="countdown-label">секунд</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PLACE / MAP ============ -->
+  <section class="section place-section" id="place">
+    <div class="container">
+      <p class="section-eyebrow reveal">Қайда</p>
+      <h2 class="section-title reveal">Той орны</h2>
+
+      <div class="place-card reveal" data-delay="100">
+        <div class="place-info">
+          <p class="place-city">
+            <span class="city-line"></span>
+            <span class="city-name">Тараз</span>
+            <span class="city-line"></span>
+          </p>
+          <p class="place-eyebrow">мейрамхана</p>
+          <h3 class="place-name">Baltash</h3>
+          <svg class="place-oyu" viewBox="0 0 736 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#sym-oyu"/></svg>
+          <p class="place-address">проспект Жамбыла, 121а</p>
+
+          <a class="place-btn-primary" href="https://2gis.kz/taraz/geo/70000001109566068/71.362882,42.906708" target="_blank" rel="noopener noreferrer">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 22 S2 14 2 9 a10 10 0 0 1 20 0 c0 5-10 13-10 13z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="9" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg>
+            <span>Картадан көру</span>
+            <span class="btn-arrow">→</span>
+          </a>
+        </div>
+
+        <a class="place-map" href="https://2gis.kz/taraz/geo/70000001109566068/71.362882,42.906708" target="_blank" rel="noopener noreferrer" aria-label="Baltash мейрамханасы — картадан көру">
+          <svg class="map-corner map-corner--tl" viewBox="0 0 60 60" aria-hidden="true"><use href="#sym-corner"/></svg>
+          <svg class="map-corner map-corner--tr" viewBox="0 0 60 60" aria-hidden="true"><use href="#sym-corner"/></svg>
+          <svg class="map-corner map-corner--bl" viewBox="0 0 60 60" aria-hidden="true"><use href="#sym-corner"/></svg>
+          <svg class="map-corner map-corner--br" viewBox="0 0 60 60" aria-hidden="true"><use href="#sym-corner"/></svg>
+          <div class="map-frame-inner">
+            <img class="map-img" src="/images/map.png" alt="Baltash на карте Тараза" loading="lazy" />
+            <div class="map-pin" aria-hidden="true">
+              <svg viewBox="0 0 32 40" fill="none">
+                <path d="M16 38 C5 26 2 18 2 12 C2 5 8 0 16 0 C24 0 30 5 30 12 C30 18 27 26 16 38 Z" fill="currentColor"/>
+                <circle cx="16" cy="12" r="5" fill="#FFFCF6"/>
+              </svg>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RSVP ============ -->
+  <section class="section rsvp" id="rsvp">
+    <div class="container container--narrow">
+      <p class="section-eyebrow reveal">Растау</p>
+      <h2 class="section-title reveal">Қатысуыңызды растаңыз</h2>
+      <svg class="rsvp-oyu reveal" data-delay="80" viewBox="0 0 736 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#sym-oyu"/></svg>
+
+      <form id="rsvpForm" class="rsvp-form reveal" data-delay="200" novalidate>
+        <div class="field">
+          <label class="field-label" for="rsvpName">Аты-жөніңіз</label>
+          <input
+            type="text"
+            id="rsvpName"
+            name="name"
+            class="field-input"
+            placeholder="Айгерім Сейтжанқызы"
+            autocomplete="name"
+            required
+            maxlength="200" />
+        </div>
+
+        <div class="field">
+          <span class="field-label">Жауабыңыз</span>
+          <div class="radio-group">
+            <label class="radio">
+              <input type="radio" name="response" value="келемін" required />
+              <span class="radio-box">
+                <span class="radio-check" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8 L7 12 L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="radio-text">
+                  <span class="radio-title">Келемін</span>
+                </span>
+              </span>
+            </label>
+
+            <label class="radio">
+              <input type="radio" name="response" value="жұбыммен келемін" required />
+              <span class="radio-box">
+                <span class="radio-check" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M3 8 L7 12 L13 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </span>
+                <span class="radio-text">
+                  <span class="radio-title">Жұбыммен келемін</span>
+                </span>
+              </span>
+            </label>
+
+            <label class="radio">
+              <input type="radio" name="response" value="келе алмаймын" required />
+              <span class="radio-box">
+                <span class="radio-check" aria-hidden="true">
+                  <svg viewBox="0 0 16 16" fill="none">
+                    <path d="M4 4 L12 12 M12 4 L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </span>
+                <span class="radio-text">
+                  <span class="radio-title">Өкінішке орай келе алмаймын</span>
+                </span>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <button type="submit" class="submit-btn">
+          <span class="submit-text">Жауапты жіберу</span>
+          <span class="submit-arrow" aria-hidden="true">→</span>
+        </button>
+
+        <div id="rsvpStatus" class="rsvp-status" role="status" aria-live="polite"></div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ============ FINAL ============ -->
+  <section class="section final" id="final">
+    <div class="final-bg" style="background-image: url('/images/bride-2.jpg');"></div>
+    <div class="final-tint"></div>
+    <div class="final-content">
+      <p class="final-text reveal" data-delay="100">
+        Сіздің қатысуыңыз —<br />
+        <em>біз үшін ең қымбат сыйлық</em>
+      </p>
+      <p class="final-signature reveal" data-delay="250">Күтеміз!</p>
+    </div>
+  </section>
+
+  <!-- ============ THANK YOU MODAL ============ -->
+  <div id="thankModal" class="thank-modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="thank-modal-overlay" data-close></div>
+    <div class="thank-modal-card">
+      <button class="thank-modal-close" data-close aria-label="Жабу">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M6 6 L18 18 M18 6 L6 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      </button>
+      <div class="thank-modal-icon" aria-hidden="true">
+        <svg viewBox="0 0 64 60">
+          <path d="M32 56 C-8 30 6 -2 32 14 C58 -2 72 30 32 56 Z" fill="currentColor"/>
+        </svg>
+      </div>
+      <p class="thank-modal-eyebrow">Жауабыңыз қабылданды</p>
+      <h3 class="thank-modal-title">Рақмет!</h3>
+      <p class="thank-modal-text" id="thankModalText">Сізді 18 шілдеде күтеміз 🤍</p>
+      <button class="thank-modal-btn" data-close>
+        <span>Жабу</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Splash -->
+  <div id="splash" class="splash">
+    <div class="splash-bg" style="background-image: url('/images/bride-3.jpg');"></div>
+    <div class="splash-tint"></div>
+    <div class="splash-inner">
+      <p class="splash-eyebrow">Қыз Ұзату</p>
+      <p class="splash-name">Ақбота</p>
+      <p class="splash-date">
+        <span>18</span><span class="splash-date-sep">·</span><span>Шілде</span><span class="splash-date-sep">·</span><span>2026</span>
+      </p>
+      <button id="splashBtn" class="splash-btn">
+        <span class="splash-btn-label">Шақыруды ашу</span>
+        <span class="splash-btn-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <path d="M5 12 L19 12 M13 6 L19 12 L13 18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+      </button>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="/script.js"></script>
+</body>
+</html>

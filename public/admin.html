@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RSVP · Админ</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FBF5EC;
+      --cream: #FFFCF6;
+      --ink: #3A2418;
+      --gold: #C9A876;
+      --gold-deep: #A8854F;
+      --line: rgba(168, 133, 79, 0.25);
+    }
+    body {
+      margin: 0;
+      padding: 40px 24px;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'Manrope', system-ui, sans-serif;
+    }
+    .wrap { max-width: 1000px; margin: 0 auto; }
+    h1 {
+      font-weight: 500;
+      margin: 0 0 8px;
+      font-size: 1.6rem;
+    }
+    .sub {
+      color: #8A7461;
+      margin: 0 0 28px;
+      font-size: 0.9rem;
+    }
+    .stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      flex: 1;
+      min-width: 180px;
+      padding: 20px 24px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: #8A7461;
+      margin: 0 0 8px;
+    }
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 600;
+      margin: 0;
+    }
+    .stat-value.green { color: #4F7A4A; }
+    .stat-value.red { color: #A65555; }
+
+    .toolbar {
+      margin-bottom: 18px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      background: var(--ink);
+      color: var(--cream);
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      transition: background 0.2s ease;
+    }
+    .btn:hover { background: var(--gold-deep); }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--cream);
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+    }
+    th, td {
+      text-align: left;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--line);
+      font-size: 0.92rem;
+    }
+    th {
+      background: rgba(224, 201, 154, 0.2);
+      font-weight: 600;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #5C4233;
+    }
+    tr:last-child td { border-bottom: none; }
+    .tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 500;
+    }
+    .tag.yes { background: #D4E8C8; color: #4F7A4A; }
+    .tag.no { background: #F5D5D5; color: #A65555; }
+
+    .empty {
+      text-align: center;
+      padding: 60px 24px;
+      color: #8A7461;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>RSVP · Қыз Ұзату · Ақбота</h1>
+    <p class="sub">18 шілде 2026 · «Baltash» мейрамханасы</p>
+
+    <div class="stats">
+      <div class="stat">
+        <p class="stat-label">Барлығы</p>
+        <p class="stat-value" id="totalCount">0</p>
+      </div>
+      <div class="stat">
+        <p class="stat-label">Келемін</p>
+        <p class="stat-value green" id="yesCount">0</p>
+      </div>
+      <div class="stat">
+        <p class="stat-label">Келе алмаймын</p>
+        <p class="stat-value red" id="noCount">0</p>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <a class="btn" id="downloadBtn" href="#">⬇ Excel жүктеу</a>
+    </div>
+
+    <div id="tableWrap"></div>
+  </div>
+
+  <script>
+    const key = new URLSearchParams(location.search).get('key');
+    document.getElementById('downloadBtn').href = '/api/rsvp/download?key=' + encodeURIComponent(key);
+
+    async function load() {
+      const res = await fetch('/api/rsvp/list?key=' + encodeURIComponent(key));
+      if (!res.ok) {
+        document.getElementById('tableWrap').innerHTML = '<div class="empty">Қатынау жоқ</div>';
+        return;
+      }
+      const { rows } = await res.json();
+      const yes = rows.filter(r => r.response === 'келемін').length;
+      const no = rows.filter(r => r.response === 'келе алмаймын').length;
+      document.getElementById('totalCount').textContent = rows.length;
+      document.getElementById('yesCount').textContent = yes;
+      document.getElementById('noCount').textContent = no;
+
+      if (!rows.length) {
+        document.getElementById('tableWrap').innerHTML = '<div class="empty">Әзірге жауаптар жоқ</div>';
+        return;
+      }
+
+      const html = `
+        <table>
+          <thead>
+            <tr><th>№</th><th>Күні</th><th>Аты-жөні</th><th>Жауап</th></tr>
+          </thead>
+          <tbody>
+            ${rows.reverse().map(r => `
+              <tr>
+                <td>${r.id}</td>
+                <td>${r.timestamp}</td>
+                <td>${r.name}</td>
+                <td><span class="tag ${r.response === 'келемін' ? 'yes' : 'no'}">${r.response}</span></td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+      document.getElementById('tableWrap').innerHTML = html;
+    }
+    load();
+  </script>
+</body>
+</html>

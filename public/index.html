@@ -9,11 +9,11 @@
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Қыз Ұзату · Ақбота" />
   <meta property="og:description" content="18 шілде 2026 · Тараз · Baltash · Сізді қыз ұзату тойымызға шақырамыз" />
-  <meta property="og:image" content="/images/bride-1.jpg" />
+  <meta property="og:image" content="/images/bride-white.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Marcellus&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Marck+Script&family=Caveat:wght@400;500;600;700&family=Italianno&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Marcellus&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Marck+Script&family=Caveat:wght@400;500;600;700&family=Italianno&family=Dancing+Script:wght@400;500;600;700&family=Pinyon+Script&family=Allura&family=Sacramento&family=Great+Vibes&family=Yeseva+One&family=Yellowtail&family=Pacifico&family=Lobster&family=Comforter&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
 
   <link rel="stylesheet" href="/styles.css" />
 
@@ -64,6 +64,7 @@
         <path fill="currentColor" opacity="0.7" d="M14 11 C16 9 18 9 20 11 L18 13 Z" />
       </symbol>
 
+
       <!-- ОЮ узор — превращаем через mask -->
       <symbol id="sym-oyu" viewBox="0 0 736 100" preserveAspectRatio="xMidYMid meet">
         <defs>
@@ -91,30 +92,14 @@
     <source src="/music/senimenen.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- ============ HERO ============ -->
-  <section class="hero" id="hero">
-    <div class="hero-bg" style="background-image: url('/images/bride-white.jpg');"></div>
-    <div class="hero-vignette"></div>
-    <div class="hero-grain"></div>
+  <!-- HERO removed — splash serves as the cover -->
 
-    <div class="hero-content">
-      <h1 class="hero-name">
-        <span class="hero-name-letter">А</span><span class="hero-name-letter">қ</span><span class="hero-name-letter">б</span><span class="hero-name-letter">о</span><span class="hero-name-letter">т</span><span class="hero-name-letter">а</span>
-      </h1>
-      <p class="hero-eyebrow">Қыз Ұзату</p>
-      <div class="hero-flourish" aria-hidden="true">
-        <svg viewBox="0 0 736 100" preserveAspectRatio="xMidYMid meet"><use href="#sym-oyu"/></svg>
-      </div>
-      <p class="hero-date">
-        <span>18</span><span class="hero-date-sep">·</span><span>Шілде</span><span class="hero-date-sep">·</span><span>2026</span>
-      </p>
-    </div>
-  </section>
 
   <!-- ============ GREETING ============ -->
   <section class="section greeting" id="greeting">
+    <div class="greeting-flower greeting-flower--tr" aria-hidden="true"></div>
+    <div class="greeting-flower greeting-flower--bl" aria-hidden="true"></div>
     <div class="container container--narrow">
-      <p class="section-eyebrow reveal">Қадірменді достар</p>
       <h2 class="section-title reveal">Құрметті қонақтар!</h2>
       <p class="greeting-text reveal" data-delay="120">
         Бұл біздің жанұямыз үшін ерекше әрі қуанышқа толы сәт.
@@ -129,7 +114,7 @@
 
   <!-- ============ STORY — фото невесты на полный экран ============ -->
   <section class="story story--full" id="story1" aria-hidden="true">
-    <div class="story-photo" style="background-image: url('/images/bride-3.jpg');">
+    <div class="story-photo" style="background-image: url('/images/botik.png');">
       <div class="story-photo-frame"></div>
     </div>
   </section>
@@ -149,7 +134,6 @@
   <!-- ============ DATE / CALENDAR ============ -->
   <section class="section date-section" id="date">
     <div class="container">
-      <p class="section-eyebrow reveal">Қашан</p>
       <h2 class="section-title reveal">Той күні</h2>
 
       <div class="calendar reveal" data-delay="150">
@@ -255,7 +239,6 @@
   <!-- ============ PLACE / MAP ============ -->
   <section class="section place-section" id="place">
     <div class="container">
-      <p class="section-eyebrow reveal">Қайда</p>
       <h2 class="section-title reveal">Той орны</h2>
 
       <div class="place-card reveal" data-delay="100">
@@ -299,7 +282,6 @@
   <!-- ============ RSVP ============ -->
   <section class="section rsvp" id="rsvp">
     <div class="container container--narrow">
-      <p class="section-eyebrow reveal">Растау</p>
       <h2 class="section-title reveal">Қатысуыңызды растаңыз</h2>
       <svg class="rsvp-oyu reveal" data-delay="80" viewBox="0 0 736 100" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><use href="#sym-oyu"/></svg>
 
@@ -376,7 +358,7 @@
 
   <!-- ============ FINAL ============ -->
   <section class="section final" id="final">
-    <div class="final-bg" style="background-image: url('/images/bride-2.jpg');"></div>
+    <div class="final-bg" style="background-image: url('/images/urta.jpeg');"></div>
     <div class="final-tint"></div>
     <div class="final-content">
       <p class="final-text reveal" data-delay="100">
@@ -410,11 +392,14 @@
 
   <!-- Splash -->
   <div id="splash" class="splash">
-    <div class="splash-bg" style="background-image: url('/images/bride-3.jpg');"></div>
+    <div class="splash-bg" style="background-image: url('/images/bride-white.jpg');"></div>
     <div class="splash-tint"></div>
     <div class="splash-inner">
-      <p class="splash-eyebrow">Қыз Ұзату</p>
       <p class="splash-name">Ақбота</p>
+      <p class="splash-eyebrow">Қыз Ұзату</p>
+      <div class="splash-flourish" aria-hidden="true">
+        <svg viewBox="0 0 736 100" preserveAspectRatio="xMidYMid meet"><use href="#sym-oyu"/></svg>
+      </div>
       <p class="splash-date">
         <span>18</span><span class="splash-date-sep">·</span><span>Шілде</span><span class="splash-date-sep">·</span><span>2026</span>
       </p>
@@ -429,8 +414,6 @@
     </div>
   </div>
 
-  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-          integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <script src="/script.js"></script>
 </body>
 </html>
